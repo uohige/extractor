@@ -1,0 +1,22 @@
+services:
+    web:
+        build:
+            context: .
+            dockerfile: dockerfile
+        image: extractor
+        container_name: extractor
+        tty: true
+        volumes:
+            - ~/docker/extractor/app:/home/app/
+        working_dir: /home/app
+        ports:
+            - 8501:8501
+        environment:
+            TZ: Asia/Tokyo
+        restart: always
+        logging:
+            driver: json-file
+            options:
+                max-size: 1m
+                max-file: 3
+        command: streamlit run extractor.py --server.runOnSave true
